@@ -1,0 +1,49 @@
+/*Question 1: What is the most popular genre of music in the store?*/
+SELECT
+  G.Name,
+  COUNT(*) AS Most_Genre
+FROM Genre G
+JOIN Track T
+  ON T.GenreId = G.GenreId
+GROUP BY G.Name
+ORDER BY Most_Genre DESC
+*****************************************************************
+
+/*Question 1: What are the 10 popular artists to the most albums in the store??*/
+SELECT
+  R.Name,
+  COUNT(L.Title) AS count_album
+FROM Artist R
+JOIN Album L
+  ON R.ArtistId = L.ArtistId
+GROUP BY R.Name
+ORDER BY count_album DESC
+Limit 10
+;
+*******************************************************************
+/*Question 1: What are the 10 most billing country to customers?*/
+SELECT
+  C.Country,
+  COUNT(*) AS Count
+FROM Invoice I
+JOIN customer C
+  ON I.CustomerId = C.CustomerId
+GROUP BY C.Country
+ORDER BY Count DESC
+Limit 10;
+*********************************************************************
+/*What is the most popular album of the jazz music?*/
+SELECT
+  L.Title,
+  COUNT(L.Title) AS count_album
+FROM Artist R
+JOIN Album L
+  ON R.ArtistId = L.ArtistId
+JOIN Track T
+  ON T.AlbumId = L.AlbumId
+JOIN Genre G
+  ON G.GenreId = T.GenreId
+WHERE G.Name = 'Jazz'
+GROUP BY L.Title
+ORDER BY count_album DESC
+LIMIT 10;
